@@ -13,13 +13,12 @@ all: help
 
 # Installs the dependencies.
 .PHONY: build-deps
-
 build-deps:
 	$(GOINST) "github.com/goreleaser/goreleaser@latest"
 
 # Builds the project.
 .PHONY: build
-build:
+build: generate
 	$(GOBUILD) -o $(BINARY_NAME) -v
 
 # Runs the project.
@@ -29,7 +28,7 @@ run:
 
 # Tests the project.
 .PHONY: test
-test:
+test: generate
 	$(GOTEST) -v ./...
 
 # Cleans the project.
@@ -59,8 +58,12 @@ release: build-deps pr lint
 	goreleaser release --rm-dist
 
 .PHONY: pr
-pr: test fmt
+pr: generate test fmt
 	echo "All checks passed"
+
+.PHONY: generate
+generate:
+	$(GOCMD) generate ./...
 
 # Prints help information.
 .PHONY: help

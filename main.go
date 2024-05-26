@@ -1,9 +1,7 @@
 package main
 
-import "fmt"
+import "jmpeax.com/linux/ignition/cmd"
 
 func main() {
-	fmt.Println("Hello, World!")
-	for {
-	}
+	cmd.Iginite()
 }
